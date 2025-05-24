@@ -1,21 +1,30 @@
 # Autonomous Multi-Actor Marketing Agent
 
-An intelligent marketing agent system built with LangGraph that provides comprehensive marketing assistance through specialized sub-agents.
+An intelligent marketing assistant built with LangGraph that provides comprehensive marketing support through specialized agents. This system analyzes user requests and routes them to the appropriate specialized agents.
+
+## Project Structure
+
+The project uses a modular architecture with separate files for each specialized agent:
+
+- **main.py**: Core workflow orchestration, supervisor, and results collector
+- **state.py**: State definitions and utility functions
+- **market_research_agent.py**: Market research specialist agent
+- **marketing_strategy_agent.py**: Marketing strategy specialist agent
+- **content_delivery_agent.py**: Content creation specialist agent
 
 ## Features
 
-- **Market Research Agent**: Analyzes market trends, competition, industry landscapes, and target audience profiles.
-- **Marketing Strategy Agent**: Develops go-to-market strategies, positioning, and competitive advantage frameworks.
-- **Content Delivery Agent**: Creates social media content, advertisement ideas, and trend-aligned marketing material.
+- **Intelligent Request Routing**: Automatically determines which specialized agents to activate based on user needs
+- **Market Research**: Analyzes market trends, competition, industry data, and target audiences
+- **Marketing Strategy**: Develops positioning, go-to-market strategies, and competitive advantages
+- **Content Creation**: Generates social media posts, advertising concepts, and content ideas
 
-## How It Works
+## Key Benefits
 
-The system uses a supervisor agent to analyze user requests and route them to the appropriate specialized sub-agents. It can run any combination of agents based on the specific request:
-
-1. You can request just market research
-2. You can request just marketing strategy
-3. You can request just content ideas
-4. Or any combination of the above
+- **Autonomous Operation**: Selectively activates only the needed specialized agents
+- **Context Sharing**: Agents can leverage information from previous agents' output
+- **Deep Web Research**: Each agent uses SerperSearch for comprehensive web research
+- **Citation Support**: Results include references to online sources
 
 ## Requirements
 
@@ -38,30 +47,52 @@ The system uses a supervisor agent to analyze user requests and route them to th
 
 ## Usage
 
+### Command Line Interface
+
+Run the agent from the command line:
+
+```bash
+python main.py
+```
+
+This starts an interactive session where you can enter your marketing requests.
+
+### Python API
+
+Import and use the agent in your Python code:
+
 ```python
-from MarketingAgent import run_marketing_agent
+from main import run_marketing_agent
 
-# Request market research only
-result = run_marketing_agent("I'm launching a new vegan protein powder. Can you analyze the market for me?")
+# Run just market research
+result = run_marketing_agent("I need market research for my new vegan protein powder")
 
-# Request marketing strategy only
-result = run_marketing_agent("I need marketing strategies for my new fintech app.")
+# Run just marketing strategy
+result = run_marketing_agent("I need marketing strategies for my fintech app")
 
-# Request content ideas only
-result = run_marketing_agent("Create social media content for my sustainable clothing brand.")
+# Run just content ideas
+result = run_marketing_agent("Create social media content for my sustainable fashion brand")
 
-# Request multiple services
-result = run_marketing_agent("I'm launching a new podcast app. I need market research and content ideas.")
+# Run multiple agents together
+result = run_marketing_agent("I'm launching a podcast app and need market research and content ideas")
 
-# The result contains the full output from all requested agents
+# Print the results
 print(result["graph_output"])
 ```
 
-## Architecture
+## Example Requests
 
-This project is built using LangGraph, which enables the creation of a structured workflow between specialized agents. The architecture follows these key principles:
+- "Analyze the market for a new mental health app targeting teenagers"
+- "I need a marketing strategy for my artisanal coffee subscription service"
+- "Create social media content for my online yoga classes"
+- "Research the market and develop a strategy for my home automation device"
 
-1. **Modular Design**: Each agent is specialized in a specific domain
-2. **Intelligent Routing**: The supervisor determines which agents to activate based on user requests
-3. **Context Sharing**: Agents can leverage outputs from previous agents when useful
-4. **Deep Research**: All agents have access to specialized web search tools 
+## How It Works
+
+1. The supervisor analyzes your request to determine which specialist agents to activate
+2. Each activated agent uses web search tools to gather relevant information
+3. Agents process this information to generate comprehensive, tailored responses
+4. The collector compiles all agent outputs into a structured final result
+
+Each agent can work independently or collaborate with other agents by accessing their outputs when available.
+
