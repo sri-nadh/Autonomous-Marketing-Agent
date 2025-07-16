@@ -7,6 +7,7 @@ An intelligent marketing assistant built with LangGraph that provides comprehens
 The project uses a modular architecture with separate files for each specialized agent:
 
 - **main.py**: Core workflow orchestration, supervisor, and results collector
+- **server.py**: FastAPI backend server with REST API endpoints
 - **state.py**: State definitions and utility functions
 - **market_research_agent.py**: Market research specialist agent
 - **marketing_strategy_agent.py**: Marketing strategy specialist agent
@@ -14,6 +15,7 @@ The project uses a modular architecture with separate files for each specialized
 
 ## Features
 
+- **FastAPI Backend**: REST API server with auto-generated documentation and async processing
 - **Intelligent Request Routing**: Automatically determines which specialized agents to activate based on user needs
 - **Market Research**: Analyzes market trends, competition, industry data, and target audiences
 - **Marketing Strategy**: Develops positioning, go-to-market strategies, and competitive advantages
@@ -46,6 +48,16 @@ The project uses a modular architecture with separate files for each specialized
    ```
 
 ## Usage
+
+### FastAPI Server (Recommended)
+
+Start the REST API server:
+
+```bash
+python server.py
+```
+
+Access the API at http://localhost:8000 with documentation at http://localhost:8000/docs
 
 ### Command Line Interface
 
