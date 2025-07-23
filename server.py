@@ -10,10 +10,18 @@ from enum import Enum
 
 from main import run_marketing_agent, create_marketing_agent_graph
 from state import AgentRouter
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Validate environment variables at startup
+required_env_vars = ["OPENAI_API_KEY", "SERPER_API_KEY"]
+missing_vars = [var for var in required_env_vars if not os.getenv(var)]
+if missing_vars:
+    logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
+    raise ValueError(f"Please set the following environment variables: {', '.join(missing_vars)}")
 
 app = FastAPI(
     title="Marketing Agent API",
@@ -65,6 +73,7 @@ class ErrorResponse(BaseModel):
 
 # In-memory storage for request tracking (use Redis/database in production)
 request_history: Dict[str, MarketingResponse] = {}
+MAX_HISTORY_SIZE = 1000  # Prevent memory issues
 
 def generate_request_id() -> str:
     """Generate a unique request ID"""
@@ -143,8 +152,13 @@ async def analyze_marketing_request(request: MarketingRequest):
             timestamp=end_time
         )
         
-        # Store in history
+        # Store in history with size limit
         request_history[request_id] = response
+        if len(request_history) > MAX_HISTORY_SIZE:
+            # Remove oldest entries
+            oldest_keys = list(request_history.keys())[:-MAX_HISTORY_SIZE]
+            for key in oldest_keys:
+                del request_history[key]
         
         logger.info(f"Request {request_id} completed in {processing_time:.2f}s")
         return response
@@ -218,12 +232,12 @@ async def get_available_agents():
 @app.post("/agents/{agent_name}", tags=["Agents"])
 async def run_specific_agent(agent_name: AgentType, request: MarketingRequest):
     """Run a specific agent directly"""
-    try:
-        # Override the request to use only the specific agent
-        request.specific_agents = [agent_name]
-        return await analyze_marketing_request(request)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    # Create a new request with the specific agent
+    specific_request = MarketingRequest(
+        query=request.query,
+        specific_agents=[agent_name]
+    )
+    return await analyze_marketing_request(specific_request)
 
 if __name__ == "__main__":
     uvicorn.run(
