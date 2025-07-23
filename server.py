@@ -9,7 +9,6 @@ import logging
 from enum import Enum
 
 from main import run_marketing_agent, create_marketing_agent_graph
-from state import AgentRouter
 import os
 
 # Configure logging
@@ -26,16 +25,13 @@ if missing_vars:
 app = FastAPI(
     title="Marketing Agent API",
     description="AI-powered marketing analysis with specialized agents for market research, strategy, and content creation",
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc"
 )
 
 # Enable CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
-    allow_credentials=True,
+    allow_origins=["*"], 
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
