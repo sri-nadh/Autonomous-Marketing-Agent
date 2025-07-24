@@ -129,21 +129,3 @@ def run_marketing_agent(user_query):
     
     return result
 
-if __name__ == "__main__":
-   
-    print("Marketing Agent - Enter your marketing request or type 'exit' to quit")
-    print("Example: 'I'm launching a new fitness app and need marketing research'")
-    
-    while True:
-        user_input = input("\nYour request: ")
-        
-        if user_input.lower() == 'exit':
-            print("Goodbye!")
-            break
-            
-        try:
-            print("\nProcessing your request...\n")
-            result = run_marketing_agent(user_input)
-            print("\n" + result["graph_output"])
-        except Exception as e:
-            print(f"An error occurred: {str(e)}") 
