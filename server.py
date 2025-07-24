@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
@@ -69,7 +69,7 @@ class ErrorResponse(BaseModel):
 
 # In-memory storage for request tracking (use Redis/database in production)
 request_history: Dict[str, MarketingResponse] = {}
-MAX_HISTORY_SIZE = 1000  # Prevent memory issues
+MAX_HISTORY_SIZE = 1000  
 
 def generate_request_id() -> str:
     """Generate a unique request ID"""

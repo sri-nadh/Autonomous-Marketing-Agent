@@ -1,7 +1,6 @@
 from typing import Annotated, List, Literal, TypedDict, Dict
 import operator
 
-# function for merging dictionaries in state
 def merge_dicts(existing_dict, new_dict):
     merged = existing_dict.copy()
     for key, value in new_dict.items():
