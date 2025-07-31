@@ -8,6 +8,7 @@ The project uses a modular architecture with separate files for each specialized
 
 - **main.py**: Core workflow orchestration, supervisor, and results collector
 - **server.py**: FastAPI backend server with REST API endpoints
+- **frontend/**: React web interface for the marketing agents
 - **state.py**: State definitions and utility functions
 - **market_research_agent.py**: Market research specialist agent
 - **marketing_strategy_agent.py**: Marketing strategy specialist agent
@@ -15,6 +16,7 @@ The project uses a modular architecture with separate files for each specialized
 
 ## Features
 
+- **React Frontend**: Modern web interface with glassmorphism design and request history
 - **FastAPI Backend**: REST API server with auto-generated documentation and async processing
 - **Intelligent Request Routing**: Automatically determines which specialized agents to activate based on user needs
 - **Market Research**: Analyzes market trends, competition, industry data, and target audiences
@@ -31,13 +33,14 @@ The project uses a modular architecture with separate files for each specialized
 ## Requirements
 
 - Python 3.9+
+- Node.js 16+ (for frontend)
 - OpenAI API key
 - Serper API key (for deep web search)
 
 ## Setup
 
 1. Clone the repository
-2. Install dependencies:
+2. Install backend dependencies:
    ```
    pip install -r requirements.txt
    ```
@@ -49,7 +52,23 @@ The project uses a modular architecture with separate files for each specialized
 
 ## Usage
 
-### FastAPI Server (Recommended)
+### Web Interface (Recommended)
+
+1. Start the backend server:
+```bash
+python server.py
+```
+
+2. Start the frontend (in a new terminal):
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Access the web interface at http://localhost:3000
+
+### FastAPI Server
 
 Start the REST API server:
 
