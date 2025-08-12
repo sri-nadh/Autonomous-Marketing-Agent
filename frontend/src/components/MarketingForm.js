@@ -27,7 +27,6 @@ function MarketingForm({ onAnalysisComplete, setLoading, loading }) {
       const response = await axios.post('/analyze', payload);
       onAnalysisComplete(response.data);
       
-      // Clear form
       setQuery('');
       setSelectedAgents([]);
       

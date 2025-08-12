@@ -317,7 +317,77 @@
 
 .results-content {
   line-height: 1.6;
-  white-space: pre-wrap;
+}
+
+/* Formatted Content Styles */
+.result-h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+}
+
+.result-h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #10b981;
+  margin: 1.25rem 0 0.75rem 0;
+  padding-left: 0.5rem;
+  border-left: 3px solid #10b981;
+}
+
+.result-h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin: 1rem 0 0.5rem 0;
+  padding-left: 0.75rem;
+  border-left: 2px solid #3b82f6;
+}
+
+.result-h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8b5cf6;
+  margin: 0.75rem 0 0.5rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid #8b5cf6;
+}
+
+.result-bullet {
+  display: flex;
+  align-items: flex-start;
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+}
+
+.bullet-point {
+  color: #fbbf24;
+  font-weight: bold;
+  margin-right: 0.75rem;
+  margin-top: 0.1rem;
+  font-size: 1.2rem;
+}
+
+.bullet-content {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.result-paragraph {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.result-bold {
+  color: #fbbf24;
+  font-weight: 600;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
 }
 
 /* History Styles */
