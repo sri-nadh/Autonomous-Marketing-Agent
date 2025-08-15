@@ -17,35 +17,39 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 llm = ChatOpenAI(model='gpt-4o', api_key=openai_api_key)
 
 # Supervisor function to determine which agents to run
-def supervisor(state: InputState) -> OverallState:
+def supervisor(state: OverallState) -> OverallState:
     
     user_input = state["user_input"]
     
-    # Prompt for the routing LLM
-    system_prompt = """
-    You are an agent router for a marketing system with three specialized sub-agents:
-    1. market_research - Analyzes market, industry, competitors for a product/service
-    2. marketing_strategy - Develops strategies to penetrate markets and differentiate products
-    3. content_delivery - Creates social media content and advertising ideas aligned with trends
-    
-    Based on the user's request, determine which agent(s) should be activated.
-    Return ONLY the agents that are explicitly or implicitly requested.
-    """
-    
-    response = llm.with_structured_output(AgentRouter).invoke([
-        SystemMessage(content=system_prompt),
-        HumanMessage(content=user_input)
-    ])
-    
-    print(response)
-    
-    selected_agents = response["selected_agents"]
+    # Check if agents are already pre-selected (from specific_agents parameter)
+    if "selected_agents" in state and state["selected_agents"]:
+        print(f"Using pre-selected agents: {state['selected_agents']}")
+        selected_agents = state["selected_agents"]
+    else:
+        # Prompt for the routing LLM
+        system_prompt = """
+        You are an agent router for a marketing system with three specialized sub-agents:
+        1. market_research - Analyzes market, industry, competitors for a product/service
+        2. marketing_strategy - Develops strategies to penetrate markets and differentiate products
+        3. content_delivery - Creates social media content and advertising ideas aligned with trends
+        
+        Based on the user's request, determine which agent(s) should be activated.
+        Return ONLY the agents that are explicitly or implicitly requested.
+        """
+        
+        response = llm.with_structured_output(AgentRouter).invoke([
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=user_input)
+        ])
+        
+        print(f"Auto-routed agents: {response}")
+        selected_agents = response["selected_agents"]
     
     return {
         "user_input": user_input,
         "selected_agents": selected_agents,
-        "agent_responses": {},
-        "execution_progress": []
+        "agent_responses": state.get("agent_responses", {}),
+        "execution_progress": state.get("execution_progress", [])
     }
 
 
