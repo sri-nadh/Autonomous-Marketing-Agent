@@ -111,22 +111,25 @@ async def analyze_marketing_request(request: MarketingRequest):
         
         # If specific agents are provided, override the supervisor routing
         if request.specific_agents:
+            selected_agent_values = [agent.value for agent in request.specific_agents]
+            logger.info(f"Using specific agents: {selected_agent_values}")
+            
             # Create a modified state with pre-selected agents
             from state import OverallState
             initial_state = {
                 "user_input": request.query,
-                "selected_agents": [agent.value for agent in request.specific_agents],
+                "selected_agents": selected_agent_values,
                 "agent_responses": {},
-                "execution_progress": []
+                "execution_progress": [],
+                "graph_output": ""
             }
             
             # Create and run the graph with pre-selected agents
             graph = create_marketing_agent_graph()
-            
-            # Skip supervisor and go directly to selected agents
             result = await asyncio.to_thread(graph.invoke, initial_state)
         else:
             # Use normal routing through supervisor
+            logger.info("No specific agents provided, using auto-routing")
             result = await asyncio.to_thread(run_marketing_agent, request.query)
         
         end_time = datetime.now()

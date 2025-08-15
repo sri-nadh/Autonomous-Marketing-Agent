@@ -99,7 +99,6 @@ def market_research_agent(state: OverallState) -> OverallState:
     
     final_output = parser.invoke(response)
     
-    print(final_output)
     
     return {
         "agent_responses": {"market_research": final_output},

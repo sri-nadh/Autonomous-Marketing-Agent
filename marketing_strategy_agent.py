@@ -104,7 +104,6 @@ def marketing_strategy_agent(state: OverallState) -> OverallState:
     
     final_response = parser.invoke(response)
     
-    print(final_response)
     
     return {
         "agent_responses": {"marketing_strategy": final_response},

@@ -49,7 +49,8 @@ def supervisor(state: OverallState) -> OverallState:
         "user_input": user_input,
         "selected_agents": selected_agents,
         "agent_responses": state.get("agent_responses", {}),
-        "execution_progress": state.get("execution_progress", [])
+        "execution_progress": state.get("execution_progress", []),
+        "graph_output": state.get("graph_output", "")
     }
 
 
@@ -88,7 +89,7 @@ def collector(state: OverallState) -> OutputState:
 
 def create_marketing_agent_graph():
     
-    builder = StateGraph(OverallState, input=InputState, output=OutputState)
+    builder = StateGraph(OverallState, input=OverallState, output=OutputState)
     
     builder.add_node("supervisor", supervisor)
     builder.add_node("market_research", market_research_agent)
@@ -127,7 +128,13 @@ graph = create_marketing_agent_graph()
 
 def run_marketing_agent(user_query):
     
-    state = {"user_input": user_query}
+    state = {
+        "user_input": user_query,
+        "selected_agents": [],
+        "agent_responses": {},
+        "execution_progress": [],
+        "graph_output": ""
+    }
     
     result = graph.invoke(state)
     
