@@ -22,10 +22,7 @@ if missing_vars:
     logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
     raise ValueError(f"Please set the following environment variables: {', '.join(missing_vars)}")
 
-app = FastAPI(
-    title="Marketing Agent API",
-    description="AI-powered marketing analysis with specialized agents for market research, strategy, and content creation",
-)
+app = FastAPI(title="Marketing Agent")
 
 # Enable CORS for frontend integration
 app.add_middleware(
@@ -67,9 +64,10 @@ class ErrorResponse(BaseModel):
     request_id: str
     timestamp: datetime
 
-# In-memory storage for request tracking (use Redis/database in production)
+# In-memory storage for request tracking 
 request_history: Dict[str, MarketingResponse] = {}
 MAX_HISTORY_SIZE = 1000  
+
 
 def generate_request_id() -> str:
     """Generate a unique request ID"""
